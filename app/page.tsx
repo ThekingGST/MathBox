@@ -1,84 +1,241 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Glows */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-15%] left-[-10%] w-[60%] h-[60%] rounded-full bg-indigo-600/10 blur-[140px]" />
-        <div className="absolute bottom-[-15%] right-[-10%] w-[60%] h-[60%] rounded-full bg-sky-500/10 blur-[140px]" />
+    <main
+      style={{
+        minHeight: '100vh',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        padding: '2rem',
+      }}
+    >
+      {/* Background Ambient Glows */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <div
+          className="bg-glow-orb"
+          style={{
+            top: '-15%',
+            left: '-10%',
+            width: '60vw',
+            height: '60vw',
+            background: 'var(--primary-glow)',
+          }}
+        />
+        <div
+          className="bg-glow-orb"
+          style={{
+            bottom: '-15%',
+            right: '-10%',
+            width: '60vw',
+            height: '60vw',
+            background: 'rgba(14, 165, 233, 0.15)', // sky-500 glow
+            animationDelay: '-4s',
+          }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-5xl px-8 text-center animate-fade-in">
-        <div className="inline-flex items-center gap-2 px-4 py-2 mb-10 glass rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-300">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+      {/* Hero Content */}
+      <div
+        className="container flex-col flex-center animate-fade-in"
+        style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: '900px' }}
+      >
+        {/* Badge */}
+        <div
+          className="glass"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.5rem 1.25rem',
+            borderRadius: '2rem',
+            color: 'var(--indigo-300)',
+            fontSize: '0.65rem',
+            fontWeight: 800,
+            textTransform: 'uppercase',
+            letterSpacing: '0.25em',
+            marginBottom: '2.5rem',
+          }}
+        >
+          <span style={{ position: 'relative', display: 'flex', height: '8px', width: '8px' }}>
+            <span
+              style={{
+                position: 'absolute',
+                height: '100%',
+                width: '100%',
+                borderRadius: '50%',
+                background: 'var(--indigo-400)',
+                opacity: 0.75,
+                animation: 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              }}
+            ></span>
+            <span
+              style={{
+                position: 'relative',
+                display: 'inline-flex',
+                borderRadius: '50%',
+                height: '8px',
+                width: '8px',
+                background: 'var(--indigo-500)',
+              }}
+            ></span>
           </span>
           Next-Gen Math Platform
         </div>
-        
-        <h1 className="text-6xl md:text-8xl font-extrabold mb-10 tracking-tighter leading-[0.9]">
+
+        {/* Headline */}
+        <h1
+          style={{
+            fontSize: 'clamp(3.5rem, 8vw, 6.5rem)',
+            fontWeight: 900,
+            lineHeight: 0.95,
+            letterSpacing: '-0.04em',
+            marginBottom: '2rem',
+          }}
+        >
           Master Math for <br />
           <span className="text-gradient">Intelligence.</span>
         </h1>
-        
-        <p className="text-lg md:text-xl text-slate-400 leading-relaxed mb-14 max-w-2xl mx-auto font-medium">
-          An interactive platform to visualize, code, and truly understand the mathematics powering the modern AI revolution. No installation required.
+
+        <p
+          className="text-gradient-subtle delay-1 animate-fade-in"
+          style={{
+            fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+            lineHeight: 1.6,
+            maxWidth: '680px',
+            marginBottom: '3.5rem',
+            fontWeight: 500,
+          }}
+        >
+          An interactive platform to visualize, code, and truly understand the mathematics powering
+          the modern AI revolution. No installation required.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-          <Link 
-            href="/learn" 
-            className="px-12 py-5 bg-indigo-600 hover:bg-indigo-500 text-white transform hover:-translate-y-1 transition-all duration-300 rounded-2xl font-bold shadow-2xl shadow-indigo-500/25 w-full sm:w-auto"
-          >
+        {/* CTA Buttons */}
+        <div
+          className="delay-2 animate-fade-in"
+          style={{
+            display: 'flex',
+            gap: '1.5rem',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
+          <Link href="/learn" className="btn-primary">
             Begin Journey
           </Link>
-          <Link 
-            href="/playground" 
-            className="px-12 py-5 glass hover:bg-white/5 transform hover:-translate-y-1 transition-all duration-300 rounded-2xl font-bold border border-white/10 w-full sm:w-auto backdrop-blur-xl"
-          >
+          <Link href="/playground" className="btn-secondary">
             Interactive Sandbox
           </Link>
         </div>
 
         {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 text-left">
-          <div className="p-8 glass-card rounded-[2rem]">
-            <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 mb-8 text-3xl shadow-inner border border-indigo-500/20">
+        <div
+          className="feature-grid delay-3 animate-fade-in"
+          style={{ marginTop: '7rem', textAlign: 'left' }}
+        >
+          {/* Card 1 */}
+          <div className="glass-card" style={{ padding: '2.5rem', borderRadius: '2rem' }}>
+            <div
+              style={{
+                width: '3.5rem',
+                height: '3.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '1rem',
+                background: 'rgba(99, 102, 241, 0.1)',
+                border: '1px solid rgba(99, 102, 241, 0.2)',
+                fontSize: '1.5rem',
+                marginBottom: '1.5rem',
+                boxShadow: 'inset 0 2px 10px rgba(99,102,241,0.2)',
+              }}
+            >
               📐
             </div>
-            <h3 className="text-xl font-bold mb-4 text-white tracking-tight">Linear Algebra</h3>
-            <p className="text-sm text-slate-400 leading-relaxed font-medium">
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
+              Linear Algebra
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
               Visualize multidimensional vectors and matrix transformations in interactive 3D space.
             </p>
           </div>
-          
-          <div className="p-8 glass-card rounded-[2rem]">
-            <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-sky-500/10 text-sky-400 mb-8 text-3xl shadow-inner border border-sky-500/20">
+
+          {/* Card 2 */}
+          <div className="glass-card" style={{ padding: '2.5rem', borderRadius: '2rem' }}>
+            <div
+              style={{
+                width: '3.5rem',
+                height: '3.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '1rem',
+                background: 'rgba(56, 189, 248, 0.1)',
+                border: '1px solid rgba(56, 189, 248, 0.2)',
+                fontSize: '1.5rem',
+                marginBottom: '1.5rem',
+                boxShadow: 'inset 0 2px 10px rgba(56,189,248,0.2)',
+              }}
+            >
               📉
             </div>
-            <h3 className="text-xl font-bold mb-4 text-white tracking-tight">Calculus</h3>
-            <p className="text-sm text-slate-400 leading-relaxed font-medium">
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
+              Calculus
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
               Explore gradient descent, optimization, and neural backpropagation through live derivations.
             </p>
           </div>
-          
-          <div className="p-8 glass-card rounded-[2rem]">
-            <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 mb-8 text-3xl shadow-inner border border-amber-500/20">
+
+          {/* Card 3 */}
+          <div className="glass-card" style={{ padding: '2.5rem', borderRadius: '2rem' }}>
+            <div
+              style={{
+                width: '3.5rem',
+                height: '3.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '1rem',
+                background: 'rgba(245, 158, 11, 0.1)',
+                border: '1px solid rgba(245, 158, 11, 0.2)',
+                fontSize: '1.5rem',
+                marginBottom: '1.5rem',
+                boxShadow: 'inset 0 2px 10px rgba(245,158,11,0.2)',
+              }}
+            >
               🐍
             </div>
-            <h3 className="text-xl font-bold mb-4 text-white tracking-tight">WASM Playground</h3>
-            <p className="text-sm text-slate-400 leading-relaxed font-medium">
-              Run real Python code with NumPy and SymPy in your browser without a backend.
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
+              WASM Playground
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              Run real Python code with NumPy and SymPy in your browser without any backend required.
             </p>
           </div>
         </div>
       </div>
 
-      <footer className="mt-32 pb-16 text-slate-500 text-xs font-bold tracking-[0.3em] uppercase opacity-50">
+      <footer
+        style={{
+          marginTop: '6rem',
+          paddingBottom: '2rem',
+          color: 'var(--text-muted)',
+          fontSize: '0.65rem',
+          fontWeight: 800,
+          textTransform: 'uppercase',
+          letterSpacing: '0.3em',
+          opacity: 0.5,
+        }}
+      >
         Mathbox — Architected for Deep Understanding.
       </footer>
     </main>
   );
 }
+
