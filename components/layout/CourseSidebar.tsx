@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useProgressStore } from '@/stores/useProgressStore';
@@ -14,44 +14,93 @@ export function CourseSidebar({ course }: CourseSidebarProps) {
   const pathname = usePathname();
   const getLessonProgress = useProgressStore((s) => s.getLessonProgress);
   const getTopicCompletion = useProgressStore((s) => s.getTopicCompletion);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <aside
       style={{
-        width: '280px',
+        width: isOpen ? '280px' : '64px',
         flexShrink: 0,
         height: 'calc(100vh - 64px)',
         position: 'sticky',
         top: '64px',
-        overflowY: 'auto',
+        overflowY: isOpen ? 'auto' : 'hidden',
+        overflowX: 'hidden',
         padding: '1.5rem 0',
         borderRight: '1px solid rgba(255,255,255,0.06)',
         background: 'rgba(6,7,10,0.8)',
         backdropFilter: 'blur(12px)',
+        transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        whiteSpace: 'nowrap',
       }}
     >
-      {/* Header */}
-      <div style={{ padding: '0 1.25rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <Link
-          href="/learn"
+      {/* Header and Toggle Button */}
+      <div 
+        style={{ 
+          padding: isOpen ? '0 1.25rem 1.25rem' : '0 1rem 1.25rem', 
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: isOpen ? 'space-between' : 'center',
+        }}
+      >
+        {isOpen && (
+          <Link
+            href="/learn"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              textDecoration: 'none',
+              color: '#f8fafc',
+              fontWeight: 800,
+              fontSize: '1.1rem',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            <span style={{ fontSize: '1.25rem' }}>📐</span>
+            Mathbox
+          </Link>
+        )}
+        
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          title={isOpen ? "Close Sidebar" : "Open Sidebar"}
           style={{
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            color: '#cbd5e1',
+            cursor: 'pointer',
+            padding: '0.4rem 0.5rem',
+            borderRadius: '0.5rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
-            textDecoration: 'none',
-            color: '#f8fafc',
-            fontWeight: 800,
-            fontSize: '1.1rem',
-            letterSpacing: '-0.02em',
+            justifyContent: 'center',
+            fontSize: '0.8rem',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(99, 102, 241, 0.2)';
+            e.currentTarget.style.color = '#a5b4fc';
+            e.currentTarget.style.borderColor = 'rgba(99, 102, 241, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+            e.currentTarget.style.color = '#cbd5e1';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
           }}
         >
-          <span style={{ fontSize: '1.25rem' }}>📐</span>
-          Mathbox
-        </Link>
+          {isOpen ? '◀' : '☰'}
+        </button>
       </div>
 
-      {/* Course topics */}
-      <nav style={{ padding: '1rem 0' }}>
+      {/* Course topics - hide immediately when animating to avoid text overflow */}
+      <nav style={{ 
+        padding: '1rem 0',
+        opacity: isOpen ? 1 : 0, 
+        transition: 'opacity 0.2s ease',
+        pointerEvents: isOpen ? 'auto' : 'none'
+      }}>
         {course.topics.map((topic) => {
           const pct = getTopicCompletion(topic.slug);
           return (
@@ -146,3 +195,4 @@ export function CourseSidebar({ course }: CourseSidebarProps) {
     </aside>
   );
 }
+
