@@ -1,0 +1,48 @@
+---
+title: "What is a Vector?"
+description: "An interactive introduction to vectors — direction, magnitude, and notation."
+order: 1
+topic: "linear-algebra"
+subject: "vectors"
+difficulty: "beginner"
+estimatedMinutes: 12
+prerequisites: []
+tags: ["vectors", "foundations"]
+---
+
+# What is a Vector?
+
+In mathematics and physics, a **vector** is a quantity that has both *magnitude* and *direction*.
+
+<Callout type="info" title="Formal Definition">
+  A vector in $\mathbb{R}^n$ is an ordered list of $n$ real numbers.
+</Callout>
+
+## Notation
+
+We write a vector $\vec{v}$ in column form:
+
+$$
+\vec{v} = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}
+$$
+
+Or in row form: $\vec{v} = [1, 2, 3]$.
+
+## In Code
+
+```python
+import numpy as np
+
+# Create a vector
+v = np.array([1, 2, 3])
+print(v)          # [1 2 3]
+print(v.shape)    # (3,)
+```
+
+## Visualize It
+
+<VizSlot name="VectorAddition" />
+
+<Callout type="tip" title="Key Takeaway">
+  Vectors are the fundamental building block of all linear algebra — and therefore, all of deep learning.
+</Callout>
