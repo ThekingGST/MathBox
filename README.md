@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mathbox
 
-## Getting Started
+> An interactive platform to visualize, code, and truly understand the mathematics powering the AI revolution.
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-black.svg?style=flat&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0-61DAFB.svg?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Why This Exists
+
+Most math education platforms treat mathematical concepts as static equations on a white background. As AI and Machine Learning demand deeper geometric intuition, static math isn't enough. **Mathbox** exists to make math deeply interactive — bridging the gap between theoretical calculus/linear algebra and interactive 3D visualizations, paired with live Python execution in the browser.
+
+## Quick Start
+
+Mathbox is built on Next.js 16 (App Router) and uses Turbopack. You don't need any complex backend to run it locally.
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourname/mathbox.git
+cd mathbox
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the platform. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## The Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: Next.js 16 (React 19 + Server Components)
+- **Styling**: Pure, high-performance Vanilla CSS (Custom "Math-Indigo" Design System)
+- **State Management**: Zustand
+- **Content Engine**: `next-mdx-remote/rsc` with KaTeX and custom components
+- **Interactivity**: Three.js / React Three Fiber (Visualizations) & Pyodide (WASM Python Sandbox)
 
-## Learn More
+## Content Authoring
 
-To learn more about Next.js, take a look at the following resources:
+Mathbox is a content-driven platform. Lessons are written in `MDX`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To add a new lesson, place an `.mdx` file inside the `content/` directory following the `[topic]/[subject]/[lesson-name].mdx` hierarchy. Spaces are not allowed in folder names.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Example `content/linear-algebra/vectors/what-is-a-vector.mdx`:**
 
-## Deploy on Vercel
+```mdx
+---
+title: "What is a Vector?"
+description: "Understanding magnitude, direction, and vector spaces."
+order: 1
+status: "published"
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Welcome to Linear Algebra! Let's explore vectors.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<MathBlock math="\vec{v} = \begin{bmatrix} x \\ y \end{bmatrix}" display />
+
+<VizSlot id="VectorAddition" />
+
+<CodeBlock language="python">
+import numpy as np
+v = np.array([1, 2])
+print(v)
+</CodeBlock>
+```
+
+The system automatically extracts the frontmatter, builds the sidebar navigation, and parses headings for the interactive Table of Contents.
+
+## Architecture Highlights
+
+1. **Server-Side Content Pipeline**: MDX is compiled securely on the server using `compileMDX`. Custom React components are baked into the registry before sending HTML to the client, preventing React serialization errors.
+2. **Hydration Gating**: Persistent local state (like lesson completion tracking) is deferred via a `<ProgressHydrationGate>` to prevent painful Next.js hydration mismatches between the server payload and client `localStorage`.
+3. **No Phantom CSS**: The project deliberately bans utility CSS frameworks like Tailwind in favor of a strictly managed, highly-performant `globals.css` that provides rich glassmorphism and ambient animations.
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to add new 3D visualizations or expand the Python REPL sandbox.
+
+## License
+
+MIT © [Saiteja Gavuji]
