@@ -178,4 +178,62 @@ export const MDXComponents: MDXComponentsType = {
       {children}
     </blockquote>
   ),
+  table: ({ children }: { children?: React.ReactNode }) => (
+    <div style={{ overflowX: 'auto', marginBottom: '2rem', marginTop: '1.5rem' }}>
+      <table
+        style={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontSize: '0.95rem',
+          color: '#cbd5e1',
+          textAlign: 'left',
+          border: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
+        {children}
+      </table>
+    </div>
+  ),
+  thead: ({ children }: { children?: React.ReactNode }) => (
+    <thead
+      style={{
+        backgroundColor: 'rgba(255,255,255,0.03)',
+        borderBottom: '2px solid rgba(255,255,255,0.08)',
+      }}
+    >
+      {children}
+    </thead>
+  ),
+  tbody: ({ children }: { children?: React.ReactNode }) => <tbody>{children}</tbody>,
+  tr: ({ children }: { children?: React.ReactNode }) => (
+    <tr
+      style={{
+        borderBottom: '1px solid rgba(255,255,255,0.04)',
+      }}
+    >
+      {children}
+    </tr>
+  ),
+  th: ({ children }: { children?: React.ReactNode }) => (
+    <th
+      style={{
+        padding: '0.75rem 1rem',
+        fontWeight: 600,
+        color: '#f8fafc',
+        borderRight: '1px solid rgba(255,255,255,0.04)',
+      }}
+    >
+      {children}
+    </th>
+  ),
+  td: ({ children }: { children?: React.ReactNode }) => (
+    <td
+      style={{
+        padding: '0.75rem 1rem',
+        borderRight: '1px solid rgba(255,255,255,0.04)',
+      }}
+    >
+      {children}
+    </td>
+  ),
 };
